@@ -16,15 +16,6 @@ const SYMBOL_VALUES ={
     "D": 1,
 }
 
-
-
-
-
-
-
-
-
-
 const deposit = () =>{
     while(true){
         const depositAmt = prompt("enter the value you want to depo: ")
@@ -123,16 +114,29 @@ const printRows = (rows) => {
 };
 
 
-
+const game  = () =>{
 let balance = deposit();
-const lines = getNumOfLines();
-const getBet = bet(balance, lines);
-const reels = spin();
-const rows= transpose(reels)
-// console.log(reels)
-// console.log(rows)
-printRows(rows);
-// console.log(`you have entered the amount of :${balance}$ on ${lines} lines in the wheel with the bet of ${getBet} each`)
+    while(true){
+        console.log(`you have the balance of ${balance} `)
+        const lines = getNumOfLines();
+        const getBet = bet(balance, lines);
+        balance -= getBet * lines;
+        const reels = spin();
+        const rows= transpose(reels)
+        // console.log(reels)
+        // console.log(rows)
+        printRows(rows);
+        // console.log(`you have entered the amount of :${balance}$ on ${lines} lines in the wheel with the bet of ${getBet} each`)
+        const winnings = getWinnings(rows, getBet, lines)
+        balance += winnings
+        console.log("you won, $" + winnings.toString())
+            if (balance <= 0){
+            console.log("you ran out of balance!!")
+            return
+        }
+        const playAgain = prompt("do you want to play again? (y/n) ?")
+        if  (playAgain != "y") break;
+    }
+}
 
-const winnings = getWinnings(rows, getBet, lines)
-console.log("you won, $" + winnings.toString())
+game();

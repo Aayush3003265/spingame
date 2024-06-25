@@ -62,16 +62,42 @@ const bet = (balance,lines) =>{
 
 const spin =()=>{
     const symbols = [];
-    for(const[symbol, count] of Object.entries(SYMBOL_COUNT)){
+    for(const[symbol, count] of Object.entries(SYMBOL_COUNT)){ // adding all SYMBOL_COUNT (symbol and keys) to symbols array
         for(let i = 0; i < count; i++){
-            symbols.push(symbol)
+            symbols.push(symbol) // push method is used to insert an new element in an array
         }
     }
+    const reel = []
+    for (let i=0; i < COLS; i++){
+        reel.push([])
+        const reelSymbol = [...symbols]
+        for(let j = 0; j < ROWS; j++){
+            const randomIndex = Math.floor(Math.random() * reelSymbol.length)
+            const selectedSymbol = reelSymbol[randomIndex]
+            reel[i].push(selectedSymbol)
+            reelSymbol.splice(randomIndex, 1)
+        }
+    }
+    return reel;
 };
 
+const transpose = (reels)=>{
+    const rows = [];
+    for (let i = 0; i < ROWS; i++){
+        rows.push([]);
+            for (let j = 0; j < COLS; j++){
+                rows[i].push(reels[j][i])
+            }
+    }
+    return rows
+}
 
-spin();
+
 let balance = deposit();
 const lines = getNumOfLines();
 const getBet = bet(balance, lines);
+const reels = spin();
+const rows= transpose(reels)
+console.log(reels)
+console.log(rows)
 console.log(`you have entered the amount of :${balance}$ on ${lines} lines in the wheel with the bet of ${getBet}`)

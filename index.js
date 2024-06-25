@@ -134,5 +134,5 @@ const rows= transpose(reels)
 printRows(rows);
 // console.log(`you have entered the amount of :${balance}$ on ${lines} lines in the wheel with the bet of ${getBet} each`)
 
-const winnings = getWinnings(rows, bet, lines)
+const winnings = getWinnings(rows, getBet, lines)
 console.log("you won, $" + winnings.toString())
